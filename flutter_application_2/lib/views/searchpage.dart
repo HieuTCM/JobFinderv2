@@ -18,14 +18,13 @@ class searchPage extends StatefulWidget {
 
 class _searchPageState extends State<searchPage> {
   Job? compaby;
-  List<Job> job= <Job>[];
-  List<Job> jobDisplay= <Job>[];
-
+  List<Job> job = <Job>[];
+  List<Job> jobDisplay = <Job>[];
 
   @override
   void initState() {
     // TODO: implement initState
-    fetchCompanys().then((value){
+    fetchCompanys().then((value) {
       setState(() {
         job.addAll(value);
         jobDisplay = job;
@@ -33,6 +32,7 @@ class _searchPageState extends State<searchPage> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,36 +54,34 @@ class _searchPageState extends State<searchPage> {
       ),
       body: ListView.builder(
           itemCount: jobDisplay.length + 1,
-          itemBuilder: (BuildContext context,int index){
-            return index == 0 ? searchBar() : listItem(index-1);
-
-          }
+          itemBuilder: (BuildContext context, int index) {
+            return index == 0 ? searchBar() : listItem(index - 1);
+          }),
+      bottomNavigationBar: bottombar(
+        username: username1,
       ),
-      bottomNavigationBar: bottombar(username: username1,),
     );
   }
 
-  searchBar(){
+  searchBar() {
     return Padding(
       padding: EdgeInsets.all(8),
       child: TextField(
-      decoration: InputDecoration(
-      hintText: 'Tên công việc'
+        decoration: InputDecoration(hintText: 'Tên công việc'),
+        onChanged: (text) {
+          text = text.toLowerCase();
+          setState(() {
+            jobDisplay = job.where((job) {
+              var jobName = job.jobName.toLowerCase();
+              return jobName.contains(text);
+            }).toList();
+          });
+        },
       ),
-      onChanged: (text){
-        text = text.toLowerCase();
-        setState(() {
-          jobDisplay = job.where((job){
-            var jobName = job.jobName.toLowerCase();
-            return jobName.contains(text);
-          }).toList();
-        });
-      },
-    ),
     );
   }
 
-  listItem(index){
+  listItem(index) {
     return Card(
       elevation: 0.0,
       margin: EdgeInsets.only(right: 18.0, top: 15.0),
@@ -106,6 +104,16 @@ class _searchPageState extends State<searchPage> {
         subtitle: Text(
           "${jobDisplay[index].mainCriteria} • ${jobDisplay[index].sallary} \n  ${jobDisplay[index].city}",
         ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => JobDetail(
+                company: jobDisplay[index],
+              ),
+            ),
+          );
+        },
         trailing: Icon(
           Icons.more_vert,
           color: kBlack,
@@ -113,5 +121,4 @@ class _searchPageState extends State<searchPage> {
       ),
     );
   }
-
 }

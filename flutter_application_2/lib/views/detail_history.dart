@@ -196,8 +196,9 @@ class DetailHistory extends StatelessWidget {
                     Future<String> result =
                         FindJobProvider.createMarkJob(markJob);
                     result.then((value) {
-                      value.contains("Add Success") ? _showToast(context, 'Lưu thành công')
-                          :  _showToast(context, 'Bạn đã lưu công việc này');
+                      value.contains("Add Success")
+                          ? _showToast(context, 'Lưu thành công')
+                          : _showToast(context, 'Bạn đã lưu công việc này');
                       print(value);
                     });
                   },
@@ -302,10 +303,10 @@ class DetailHistory extends StatelessWidget {
 
   void _showToast(BuildContext context, String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: const Text('Lưu thành công'),
+      content: Text(msg),
       duration: const Duration(seconds: 1),
       action: SnackBarAction(
-        label: 'ACTION',
+        label: '',
         onPressed: () {},
       ),
     ));

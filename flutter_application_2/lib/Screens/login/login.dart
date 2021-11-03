@@ -9,16 +9,17 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
+
 late int userId;
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController _usernameController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
-  var _usernameError="Username is wrong";
-  var _passwordError="Password is wrong";
-  var _userInvalid=false;
-  var _passInvalid=false;
+  var _usernameError = "Username is wrong";
+  var _passwordError = "Password is wrong";
+  var _userInvalid = false;
+  var _passInvalid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,15 +52,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _usernameController,
                   decoration: InputDecoration(
                     labelText: "Tài khoản *",
-                    errorText: _userInvalid ? _usernameError:null,
+                    errorText: _userInvalid ? _usernameError : null,
                   ),
-                  // validator: (value) {
-                  //   if (value!.isEmpty) {
-                  //     return "Vui lòng không được để trống";
-                  //   } else {
-                  //     return null;
-                  //   }
-                  // },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Vui lòng không được để trống";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
               ),
               SizedBox(height: size.height * 0.03),
@@ -70,15 +71,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _passwordController,
                   decoration: InputDecoration(
                     labelText: "Mật khẩu *",
-                    errorText: _passInvalid ? _passwordError:null,
+                    errorText: _passInvalid ? _passwordError : null,
                   ),
-                  // validator: (value) {
-                  //   if (value!.isEmpty) {
-                  //     return "Vui lòng không được để trống";
-                  //   } else {
-                  //     return null;
-                  //   }
-                  // },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Vui lòng không được để trống";
+                    } else {
+                      return null;
+                    }
+                  },
                   obscureText: true,
                 ),
               ),
@@ -97,9 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: RaisedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => onLogin(username: _usernameController.text.trim(),
-                              password: _passwordController.text.trim())));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => onLogin(
+                                  username: _usernameController.text.trim(),
+                                  password: _passwordController.text.trim())));
                     } else {}
                   },
                   shape: RoundedRectangleBorder(
@@ -151,41 +155,43 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
 class onLogin extends StatefulWidget {
   final String username;
   final String password;
-  const onLogin({Key? key, required this.username, required this.password}) : super(key: key);
+  const onLogin({Key? key, required this.username, required this.password})
+      : super(key: key);
 
   @override
-  _onLoginState createState() => _onLoginState(this.username,this.password);
-
+  _onLoginState createState() => _onLoginState(this.username, this.password);
 }
-late String username1='';
+
+late String username1 = '';
 
 class _onLoginState extends State<onLogin> {
   String username;
   String password;
 
-  _onLoginState(this.username,this.password);
+  _onLoginState(this.username, this.password);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: FutureBuilder<User>(
-          future: FindJobProvider.Login(username,password),
+          future: FindJobProvider.Login(username, password),
           builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
             if (snapshot.hasError) {
               print('Lỗi nè trùiii ' + snapshot.error.toString());
             }
-            if(snapshot.hasData){
+            if (snapshot.hasData) {
               print(snapshot.data!.userName);
               username1 = username;
               userId = snapshot.data!.id!;
-              if(snapshot.data!.userName!.contains(username)){
+              if (snapshot.data!.userName!.contains(username)) {
                 return Home(username: username1);
-              }else{
+              } else {
                 return Container(
-                  child:AlertDialog(
+                  child: AlertDialog(
                     title: const Text('Đăng Nhập Không Thành Công'),
                     content: SingleChildScrollView(
                       child: ListBody(
@@ -206,11 +212,12 @@ class _onLoginState extends State<onLogin> {
                   ),
                 );
               }
-            }else{
-              return Container(child: CircularProgressIndicator(),);
+            } else {
+              return Container(
+                child: CircularProgressIndicator(),
+              );
             }
-          }
-      ),
+          }),
     );
   }
 }

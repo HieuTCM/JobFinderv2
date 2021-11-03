@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:job/Screens/register/register.dart';
 import 'package:job/components/background.dart';
+import 'package:job/models/user.dart';
 import 'package:job/provider/FindJob_Provider.dart';
 import 'package:job/views/home.dart';
 
@@ -8,6 +9,7 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
+late int userId;
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -158,7 +160,7 @@ class onLogin extends StatefulWidget {
   _onLoginState createState() => _onLoginState(this.username,this.password);
 
 }
-late String username1;
+late String username1='';
 
 class _onLoginState extends State<onLogin> {
   String username;
@@ -169,17 +171,18 @@ class _onLoginState extends State<onLogin> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder(
+      child: FutureBuilder<User>(
           future: FindJobProvider.Login(username,password),
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
             if (snapshot.hasError) {
               print('Lỗi nè trùiii ' + snapshot.error.toString());
             }
             if(snapshot.hasData){
-              print(snapshot.data);
+              print(snapshot.data!.userName);
               username1 = username;
-              if(snapshot.data!.contains("Login Success")){
-                return Home(username: username);
+              userId = snapshot.data!.id!;
+              if(snapshot.data!.userName!.contains(username)){
+                return Home(username: username1);
               }else{
                 return Container(
                   child:AlertDialog(

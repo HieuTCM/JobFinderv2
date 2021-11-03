@@ -1,14 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:job/Screens/applied/historyApplied.dart';
+import 'package:job/Screens/login/login.dart';
 import 'package:job/constants.dart';
+import 'package:job/models/MarkJob.dart';
+import 'package:job/models/UserJob.dart';
 import 'package:job/models/data1.dart';
+import 'package:job/provider/FindJob_Provider.dart';
 import 'package:job/views/company_tab.dart';
 import 'package:job/views/description_tab.dart';
-import 'package:job/views/home.dart';
 import 'package:job/views/markPage.dart';
 
 class JobDetail extends StatelessWidget {
   final Job? company;
+  DateTime date = DateTime.now();
+  String currentDate = '';
   JobDetail({this.company});
 
   @override
@@ -26,7 +32,7 @@ class JobDetail extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          company!.company.name,
+          company!.company!.name.toString(),
           style: kTitleStyle,
         ),
         centerTitle: true,
@@ -57,7 +63,8 @@ class JobDetail extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
                           image: DecorationImage(
-                            image: AssetImage("assets/" + company!.image),
+                            image: AssetImage(
+                                "assets/hinhanh/" + company!.image.toString()),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -65,14 +72,14 @@ class JobDetail extends StatelessWidget {
                     ),
                     SizedBox(height: 20.0),
                     Text(
-                      company!.jobName,
+                      company!.jobName.toString(),
                       style: kTitleStyle.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: 15.0),
                     Text(
-                      ('Lương : ' + company!.sallary),
+                      ('Lương : ' + company!.sallary.toString()),
                       style: kSubtitleStyle,
                     ),
                     SizedBox(height: 15.0),
@@ -156,8 +163,15 @@ class JobDetail extends StatelessWidget {
                   icon: Icon(Icons.bookmark_border),
                   color: kBlack,
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => markPage()));
+                    MarkJob markJob =
+                        new MarkJob(id: 0, jobId: company!.id!, userId: userId);
+                    Future<String> result = FindJobProvider.createMarkJob(markJob);
+                    // String? value1;
+                    result.then((value){
+                      value.contains("Add Success") ? _showToast(context, 'Lưu thành công')
+                          :  _showToast(context, 'Bạn đã lưu công việc này');
+                      print(value);
+                    });
                   },
                 ),
               ),
@@ -167,10 +181,23 @@ class JobDetail extends StatelessWidget {
                   height: 50.0,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Applications()));
+                      currentDate = '${date.year}-${date.month}-${date.day}';
+                      int jobId = company!.id!;
+                      UserJob userJob = new UserJob(
+                          userId: userId,
+                          jobId: jobId,
+                          date: currentDate,
+                          status: "Đang chờ",
+                          id: 0);
+                      Future<String> result =
+                          FindJobProvider.createUserJob(userJob);
+                      result.then((value) {
+                        print(value);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Applications()));
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       primary: kBlack,
@@ -192,5 +219,17 @@ class JobDetail extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showToast(BuildContext context, String msg) {
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(msg),
+      duration: const Duration(seconds: 1),
+      action: SnackBarAction(
+        label: '',
+        onPressed: () {},
+      ),
+    ));
   }
 }

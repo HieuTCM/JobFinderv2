@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:job/Screens/covid/covidBody.dart';
 import 'package:job/Screens/edu/eduBody.dart';
 import 'package:job/Screens/exp/expBody.dart';
+import 'package:job/Screens/login/login.dart';
 import 'package:job/Screens/profile/editProfileMenu.dart';
+import 'package:job/Screens/profile/editprofile.dart';
 import 'package:job/constants.dart';
 import 'package:job/models/JobSeekerWorkExperience.dart';
 import 'package:job/provider/FindJob_Provider.dart';
@@ -33,33 +35,30 @@ class expMainScreen extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         child: RaisedButton(
           onPressed: () {
-            print(jobNameCon.text);
-            print(comNameCon.text);
-            print(dateStringExp1);
-            print(dateStringExp2);
-            print(valueCamketExp);
-            print(jobDetailCon.text);
+            String dateString2;
+            valueCamketExp ? dateString2 = "Hiện nay" : dateString2 = dateStringExp2;
 
             JobSeekerWorkExperience workExperience=new JobSeekerWorkExperience(
-                                    id: 0,
-                                    userId: userId,
-                                    skill: jobDetailCon.text,
-                                    experience: 'yes',
-                                    company: comNameCon.text,
-                                    job: jobNameCon.text,
-                                    startDay: dateStringExp1,
-                                    endDay: dateStringExp2,
-                                    isStillWorking: valueCamketExp
+                id: 0,
+                userId: userId,
+                skill: jobDetailCon.text,
+                experience: 'yes',
+                company: comNameCon.text,
+                job: jobNameCon.text,
+                startDay: dateStringExp1,
+                endDay: dateString2,
+                isStillWorking: valueCamketExp
             );
             Future<String> result=FindJobProvider.createJobSeekerWorkExperience(workExperience);
             result.then((value){
               print(value);
-              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditProfile(username: username1)));
             });
           },
           // onPressed: () => Navigator.pop(context),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           textColor: Colors.white,
           padding: const EdgeInsets.all(0),
           child: Container(

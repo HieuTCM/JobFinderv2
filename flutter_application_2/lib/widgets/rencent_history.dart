@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:job/Screens/applied/appliedBody.dart';
 import 'package:job/constants.dart';
 
 import 'package:job/models/data1.dart';
 
 class RecentHistory extends StatelessWidget {
   final Job? company;
-  RecentHistory({this.company});
+  final String status;
+  RecentHistory({this.company, required this.status});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,23 +23,23 @@ class RecentHistory extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
             image: DecorationImage(
-              image: AssetImage("assets/" + company!.image),
+              image: AssetImage("assets/hinhanh/" + company!.image!),
               fit: BoxFit.cover,
             ),
           ),
         ),
-        title: Text(company!.jobName, style: kTitleStyle),
+        title: Text(company!.jobName!, style: kTitleStyle),
         subtitle: Text(
           "${company!.city} • ${company!.mainCriteria} • ${company!.sallary} ",
         ),
         trailing: Container(
           width: 85,
           decoration: BoxDecoration(
-            color: "${company!.type}" == "Đang chờ"
+            color: "${status}" == "Đang chờ"
                 ? Colors.yellow[700]
-                : "${company!.type}" == "Thành công"
+                : "${status}" == "Thành công"
                     ? Colors.green[500]
-                    : "${company!.type}" == "Đã Hủy"
+                    : "${status}" == "Đã hủy"
                         ? Colors.red[500]
                         : Colors.black,
             borderRadius: BorderRadius.all(
@@ -46,7 +48,7 @@ class RecentHistory extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              "${company!.type}",
+              "${status}",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,

@@ -1,32 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:job/Screens/applied/historyApplied.dart';
 import 'package:job/Screens/login/login.dart';
-
 import 'package:job/constants.dart';
 import 'package:job/models/MarkJob.dart';
 import 'package:job/models/UserJob.dart';
 import 'package:job/models/data1.dart';
-import 'package:job/models/notify_model.dart';
 import 'package:job/provider/FindJob_Provider.dart';
 import 'package:job/views/company_tab.dart';
 import 'package:job/views/description_tab.dart';
-import 'package:job/views/home.dart';
 import 'package:job/views/markPage.dart';
-import 'package:job/views/notifyDetail.dart';
 
-class DetailHistory extends StatelessWidget {
+class MarkDetail extends StatelessWidget {
   final Job? company;
-  final int index;
-  final String status;
-  final int userJobId;
+  final int markId;
   DateTime date = DateTime.now();
   String currentDate = '';
-
-  DetailHistory(
-      {this.company,
-      required this.index,
-      required this.status,
-      required this.userJobId});
+  MarkDetail({this.company, required this.markId});
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +33,10 @@ class DetailHistory extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          company!.jobName.toString(),
+          company!.company!.name.toString(),
           style: kTitleStyle,
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-              color: kBlack,
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => NotifyDetail(
-                          item: notifyList2[index],
-                        )));
-              },
-              icon: Icon(
-                Icons.notifications,
-              )),
-        ],
       ),
       body: DefaultTabController(
         length: 2,
@@ -103,17 +80,13 @@ class DetailHistory extends StatelessWidget {
                     ),
                     SizedBox(height: 15.0),
                     Text(
-                      company!.sallary.toString(),
+                      ('Lương : ' + company!.sallary.toString()),
                       style: kSubtitleStyle,
                     ),
                     SizedBox(height: 15.0),
-                    Text(
-                      company!.tag.toString(),
-                      style: kSubtitleStyle,
-                    ),
                     // Row(
                     //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: company!.tag!
+                    //   children: company!.company.tag
                     //       .map(
                     //         (e) => Container(
                     //           margin: EdgeInsets.symmetric(horizontal: 5.0),
@@ -134,7 +107,7 @@ class DetailHistory extends StatelessWidget {
                     //       )
                     //       .toList(),
                     // ),
-                    SizedBox(height: 30.0),
+                    SizedBox(height: 20.0),
                     Material(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -191,15 +164,15 @@ class DetailHistory extends StatelessWidget {
                   icon: Icon(Icons.bookmark_border),
                   color: kBlack,
                   onPressed: () {
-                    MarkJob markJob =
-                        new MarkJob(id: 0, jobId: company!.id!, userId: userId);
-                    Future<String> result =
-                        FindJobProvider.createMarkJob(markJob);
-                    result.then((value) {
-                      value.contains("Add Success") ? _showToast(context, 'Lưu thành công')
-                          :  _showToast(context, 'Bạn đã lưu công việc này');
-                      print(value);
-                    });
+                    _delete(context);
+                    // MarkJob markJob =
+                    //     new MarkJob(id: 0, jobId: company!.id!, userId: userId);
+                    // Future<String> result =
+                    //     FindJobProvider.createMarkJob(markJob);
+                    // result.then((value) {
+                    //   print(value);
+                    //   _showToast(context, value);
+                    // });
                   },
                 ),
               ),
@@ -207,90 +180,39 @@ class DetailHistory extends StatelessWidget {
               Expanded(
                 child: SizedBox(
                   height: 50.0,
-                  child: "${status}" == "Thành công"
-                      ? Container(
-                          width: 50.0,
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: kBlack.withOpacity(.5)),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: Center(
-                            child: Text("Xin việc thành công"),
-                          ),
-                        )
-                      : ElevatedButton(
-                          onPressed: () {
-                            // "${status}" == "Thành công"
-                            //     ? {}
-                            //     : Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) => Applications())
-                            // );
-                            if ("${status}" == "Thành công") {
-                            } else if ("${status}" == "Đã hủy" ||
-                                "${status}" == "Bị từ chối") {
-                              currentDate =
-                                  '${date.year}-${date.month}-${date.day}';
-                              UserJob userJob = new UserJob(
-                                  userId: userId,
-                                  jobId: company!.id!,
-                                  date: currentDate,
-                                  status: "Đang chờ",
-                                  id: userJobId);
-                              Future<String> result =
-                                  FindJobProvider.updateUserJob(
-                                      userJob, userJobId);
-                              result.then((value) {
-                                print(value);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Applications()));
-                              });
-                            } else {
-                              currentDate =
-                                  '${date.year}-${date.month}-${date.day}';
-                              UserJob userJob = new UserJob(
-                                  userId: userId,
-                                  jobId: company!.id!,
-                                  date: currentDate,
-                                  status: "Đã hủy",
-                                  id: userJobId);
-                              Future<String> result =
-                                  FindJobProvider.updateUserJob(
-                                      userJob, userJobId);
-                              result.then((value) {
-                                print(value);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Applications()));
-                              });
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: "${status}" == "Đang chờ"
-                                ? Colors.red
-                                : "${status}" == "Thành công"
-                                    ? Colors.green
-                                    : Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                          ),
-                          child: Text(
-                            "${status}" == "Đang chờ"
-                                ? "Hủy đơn xin việc"
-                                : "${status}" == "Thành công"
-                                    ? "Xin việc thành công"
-                                    : "Xin việc",
-                            style: kTitleStyle.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      currentDate = '${date.year}-${date.month}-${date.day}';
+                      int jobId = company!.id!;
+                      UserJob userJob = new UserJob(
+                          userId: userId,
+                          jobId: jobId,
+                          date: currentDate,
+                          status: "Đang chờ",
+                          id: 0);
+                      Future<String> result =
+                          FindJobProvider.createUserJob(userJob);
+                      result.then((value) {
+                        print(value);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Applications()));
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: kBlack,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                    child: Text(
+                      "Xin việc",
+                      style: kTitleStyle.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
               )
             ],
@@ -309,5 +231,42 @@ class DetailHistory extends StatelessWidget {
         onPressed: () {},
       ),
     ));
+  }
+
+  void _delete(BuildContext context) {
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return CupertinoAlertDialog(
+            title: Text('Xóa công việc lưu trữ'),
+            content: Text('Bạn muốn xóa công việc lưu trữ này?'),
+            actions: [
+              // The "Yes" button
+              CupertinoDialogAction(
+                onPressed: () {
+                  Future<String> result = FindJobProvider.deleteMarkJob(markId);
+                  result.then((value) {
+                    print(value);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => markPage()));
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: Text('Có'),
+                isDefaultAction: true,
+                isDestructiveAction: true,
+              ),
+              // The "No" button
+              CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Không'),
+                isDefaultAction: false,
+                isDestructiveAction: false,
+              )
+            ],
+          );
+        });
   }
 }

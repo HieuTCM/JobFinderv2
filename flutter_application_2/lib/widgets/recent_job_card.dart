@@ -21,12 +21,12 @@ class RecentJobCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
             image: DecorationImage(
-              image: AssetImage("assets/" + company!.image),
+              image: AssetImage("assets/hinhanh/" + company!.image!),
               fit: BoxFit.cover,
             ),
           ),
         ),
-        title: Text(company!.jobName, style: kTitleStyle),
+        title: Text(company!.jobName!, style: kTitleStyle),
         subtitle: Text(
           "${company!.mainCriteria} • ${company!.sallary} \n  ${company!.city}",
         ),

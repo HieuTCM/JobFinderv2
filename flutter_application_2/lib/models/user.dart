@@ -18,10 +18,10 @@ class User {
   late final String? role;
   late final String? userName;
   late final String? password;
-  List<CovidPassport>? covidPassports;
-  List<CovidTestPaper>? covidTestPapers;
-  List<JobSeekerEducation>? jobSeekerEducations;
-  List<JobSeekerWorkExperience>? jobSeekerWorkExperiences;
+  // List<CovidPassport>? covidPassports;
+  // List<CovidTestPaper>? covidTestPapers;
+  // List<JobSeekerEducation>? jobSeekerEducations;
+  // List<JobSeekerWorkExperience>? jobSeekerWorkExperiences;
 
   User(
       {this.id,
@@ -37,10 +37,11 @@ class User {
         this.role,
         this.userName,
         this.password,
-        this.covidPassports,
-        this.covidTestPapers,
-        this.jobSeekerEducations,
-        this.jobSeekerWorkExperiences});
+        // this.covidPassports,
+        // this.covidTestPapers,
+        // this.jobSeekerEducations,
+        // this.jobSeekerWorkExperiences
+      });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -56,30 +57,30 @@ class User {
     role = json['role'];
     userName = json['userName'];
     password = json['password'];
-    if (json['covidPassports'] != null) {
-      covidPassports = <CovidPassport>[];
-      json['covidPassports'].forEach((v) {
-        covidPassports!.add(new CovidPassport.fromJson(v));
-      });
-    }
-    if (json['covidTestPapers'] != null) {
-      covidTestPapers = <CovidTestPaper>[];
-      json['covidTestPapers'].forEach((v) {
-        covidTestPapers!.add(new CovidTestPaper.fromJson(v));
-      });
-    }
-    if (json['jobSeekerEducations'] != null) {
-      jobSeekerEducations = <JobSeekerEducation>[];
-      json['jobSeekerEducations'].forEach((v) {
-        jobSeekerEducations!.add(new JobSeekerEducation.fromJson(v));
-      });
-    }
-    if (json['jobSeekerWorkExperiences'] != null) {
-      jobSeekerWorkExperiences = <JobSeekerWorkExperience>[];
-      json['jobSeekerWorkExperiences'].forEach((v) {
-        jobSeekerWorkExperiences!.add(new JobSeekerWorkExperience.fromJson(v));
-      });
-    }
+    // if (json['covidPassports'] != null) {
+    //   covidPassports = <CovidPassport>[];
+    //   json['covidPassports'].forEach((v) {
+    //     covidPassports!.add(new CovidPassport.fromJson(v));
+    //   });
+    // }
+    // if (json['covidTestPapers'] != null) {
+    //   covidTestPapers = <CovidTestPaper>[];
+    //   json['covidTestPapers'].forEach((v) {
+    //     covidTestPapers!.add(new CovidTestPaper.fromJson(v));
+    //   });
+    // }
+    // if (json['jobSeekerEducations'] != null) {
+    //   jobSeekerEducations = <JobSeekerEducation>[];
+    //   json['jobSeekerEducations'].forEach((v) {
+    //     jobSeekerEducations!.add(new JobSeekerEducation.fromJson(v));
+    //   });
+    // }
+    // if (json['jobSeekerWorkExperiences'] != null) {
+    //   jobSeekerWorkExperiences = <JobSeekerWorkExperience>[];
+    //   json['jobSeekerWorkExperiences'].forEach((v) {
+    //     jobSeekerWorkExperiences!.add(new JobSeekerWorkExperience.fromJson(v));
+    //   });
+    // }
   }
 
   Map<String, dynamic> toJson() {
@@ -97,22 +98,22 @@ class User {
     data['role'] = this.role;
     data['userName'] = this.userName;
     data['password'] = this.password;
-    if (this.covidPassports != null) {
-      data['covidPassports'] =
-          this.covidPassports!.map((v) => v.toJson()).toList();
-    }
-    if (this.covidTestPapers != null) {
-      data['covidTestPapers'] =
-          this.covidTestPapers!.map((v) => v.toJson()).toList();
-    }
-    if (this.jobSeekerEducations != null) {
-      data['jobSeekerEducations'] =
-          this.jobSeekerEducations!.map((v) => v.toJson()).toList();
-    }
-    if (this.jobSeekerWorkExperiences != null) {
-      data['jobSeekerWorkExperiences'] =
-          this.jobSeekerWorkExperiences!.map((v) => v.toJson()).toList();
-    }
+    // if (this.covidPassports != null) {
+    //   data['covidPassports'] =
+    //       this.covidPassports!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.covidTestPapers != null) {
+    //   data['covidTestPapers'] =
+    //       this.covidTestPapers!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.jobSeekerEducations != null) {
+    //   data['jobSeekerEducations'] =
+    //       this.jobSeekerEducations!.map((v) => v.toJson()).toList();
+    // }
+    // if (this.jobSeekerWorkExperiences != null) {
+    //   data['jobSeekerWorkExperiences'] =
+    //       this.jobSeekerWorkExperiences!.map((v) => v.toJson()).toList();
+    // }
     return data;
   }
 }

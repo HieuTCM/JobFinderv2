@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:job/Screens/covid/covidTestBody.dart';
+import 'package:job/Screens/login/login.dart';
 import 'package:job/Screens/profile/editProfileMenu.dart';
 import 'package:job/Screens/profile/editprofile.dart';
 import 'package:job/constants.dart';
@@ -60,7 +61,8 @@ class _covidTestState extends State<covidTest> {
             Future<String> result=FindJobProvider.createCovidTestPaper(testPaper);
             result.then((value){
               print(value);
-              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditProfile(username: username1)));
             });
           },
           shape:

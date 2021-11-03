@@ -28,7 +28,7 @@ class DescriptionTab extends StatelessWidget {
           ),
           SizedBox(height: 25.0),
           Text(
-            company!.salaryDescription,
+            company!.salaryDescription.toString(),
             style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w300,
               height: 1.5,
@@ -62,7 +62,7 @@ class DescriptionTab extends StatelessWidget {
           //       .toList(),
           // ),
           Text(
-            company!.salaryDetail,
+            company!.salaryDetail.toString(),
             style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w300,
               height: 1.5,
@@ -76,7 +76,7 @@ class DescriptionTab extends StatelessWidget {
           ),
           SizedBox(height: 25.0),
           Text(
-            company!.workingTime,
+            company!.workingTime.toString(),
             style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w300,
               height: 1.5,
@@ -110,7 +110,7 @@ class DescriptionTab extends StatelessWidget {
           //       .toList(),
           // ),
           Text(
-            company!.workingTimeDescription,
+            company!.workingTimeDescription.toString(),
             style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w300,
               height: 1.5,
@@ -123,7 +123,7 @@ class DescriptionTab extends StatelessWidget {
             style: kTitleStyle.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
-            company!.workingPlace,
+            company!.workingPlace.toString(),
             style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w300,
               height: 1.5,
@@ -136,7 +136,7 @@ class DescriptionTab extends StatelessWidget {
             style: kTitleStyle.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
-            company!.jobOpportunity,
+            company!.jobOpportunity.toString(),
             style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w300,
               height: 1.5,
@@ -150,7 +150,7 @@ class DescriptionTab extends StatelessWidget {
           ),
           SizedBox(height: 25.0),
           Text(
-            company!.jobResponsbilities,
+            company!.jobResponsbilities.toString(),
             style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w300,
               height: 1.5,
@@ -192,7 +192,7 @@ class DescriptionTab extends StatelessWidget {
             style: kTitleStyle.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
-            company!.covidPassport,
+            company!.covidPassport.toString(),
             style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w300,
               height: 1.5,

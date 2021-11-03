@@ -1,23 +1,23 @@
 class Job {
-  late int id;
-  late String type;
-  late String city;
-  late String sallary;
-  late int companyId;
-  late String image;
-  late String mainCriteria;
-  late String jobOpportunity;
-  late String employee;
-  late String covidPassport;
-  late String workingPlace;
-  late String salaryDescription;
-  late String workingTimeDescription;
-  late String workingTime;
-  late String salaryDetail;
-  late String jobResponsbilities;
-  late String tag;
-  late String jobName;
-  late Company company;
+  late int? id;
+  late String? type;
+  late String? city;
+  late String? sallary;
+  late int? companyId;
+  late String? image;
+  late String? mainCriteria;
+  late String? jobOpportunity;
+  late String? employee;
+  late String? covidPassport;
+  late String? workingPlace;
+  late String? salaryDescription;
+  late String? workingTimeDescription;
+  late String? workingTime;
+  late String? salaryDetail;
+  late String? jobResponsbilities;
+  late String? tag;
+  late String? jobName;
+  late Company? company;
 
 
   @override
@@ -25,25 +25,25 @@ class Job {
     return 'Job{id: $id, type: $type, city: $city, sallary: $sallary, companyId: $companyId, image: $image, mainCriteria: $mainCriteria, jobOpportunity: $jobOpportunity, employee: $employee, covidPassport: $covidPassport, workingPlace: $workingPlace, salaryDescription: $salaryDescription, workingTimeDescription: $workingTimeDescription, workingTime: $workingTime, salaryDetail: $salaryDetail, jobResponsbilities: $jobResponsbilities, tag: $tag, jobName: $jobName, company: $company}';
   }
 
-  Job({required this.id,
-    required this.type,
-    required this.city,
-    required this.sallary,
-    required this.companyId,
-    required this.image,
-    required this.mainCriteria,
-    required this.jobOpportunity,
-    required this.employee,
-    required this.covidPassport,
-    required this.workingPlace,
-    required this.salaryDescription,
-    required this.workingTimeDescription,
-    required this.workingTime,
-    required this.salaryDetail,
-    required this.jobResponsbilities,
-    required this.tag,
-    required this.jobName,
-     required this.company
+  Job({this.id,
+    this.type,
+    this.city,
+    this.sallary,
+    this.companyId,
+    this.image,
+    this.mainCriteria,
+    this.jobOpportunity,
+    this.employee,
+    this.covidPassport,
+    this.workingPlace,
+    this.salaryDescription,
+    this.workingTimeDescription,
+    this.workingTime,
+    this.salaryDetail,
+    this.jobResponsbilities,
+    this.tag,
+    this.jobName,
+    this.company
   } );
 
   Job.fromJson(Map<String, dynamic> json) {
@@ -65,8 +65,7 @@ class Job {
     jobResponsbilities = json['jobResponsbilities'];
     tag = json['tag'];
     jobName = json['jobName'];
-    company =
-    (json['company'] != null ? new Company.fromJson(json['company']) : null)!;
+    company = new Company.fromJson(json['company']);
   }
 
   Map<String, dynamic> toJson() {
@@ -90,7 +89,7 @@ class Job {
     data['tag'] = this.tag;
     data['jobName'] = this.jobName;
     if (this.company != null) {
-      data['company'] = this.company.toJson();
+      data['company'] = this.company!.toJson();
     }
     return data;
   }
@@ -115,12 +114,12 @@ class Company {
   var mainCriteria;
 
   Company(
-      {required this.id,
+      { required this.id,
         required this.name,
         required this.location,
-        required  this.logo,
-        required  this.aboutCompany,
-        required   this.jobs});
+        required this.logo,
+        required this.aboutCompany,
+        required this.jobs});
 
   Company.fromJson(Map<String, dynamic> json) {
     id = json['id'];

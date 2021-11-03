@@ -72,7 +72,7 @@ class _searchPageState extends State<searchPage> {
           text = text.toLowerCase();
           setState(() {
             jobDisplay = job.where((job) {
-              var jobName = job.jobName.toLowerCase();
+              var jobName = job.jobName!.toLowerCase();
               return jobName.contains(text);
             }).toList();
           });
@@ -95,12 +95,12 @@ class _searchPageState extends State<searchPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
             image: DecorationImage(
-              image: AssetImage("assets/" + jobDisplay[index].image),
+              image: AssetImage("assets/hinhanh/" + jobDisplay[index].image!),
               fit: BoxFit.cover,
             ),
           ),
         ),
-        title: Text(jobDisplay[index].jobName, style: kTitleStyle),
+        title: Text(jobDisplay[index].jobName!, style: kTitleStyle),
         subtitle: Text(
           "${jobDisplay[index].mainCriteria} • ${jobDisplay[index].sallary} \n  ${jobDisplay[index].city}",
         ),

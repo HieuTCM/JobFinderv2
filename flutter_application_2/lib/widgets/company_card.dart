@@ -28,21 +28,21 @@ class CompanyCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.0),
                   image: DecorationImage(
-                    image: AssetImage("assets/" + company!.image),
+                    image: AssetImage("assets/hinhanh/" + company!.image!),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               Spacer(),
               Text(
-                company!.company.name,
+                company!.company!.name,
                 style: kTitleStyle.copyWith(color: Colors.white),
               ),
             ],
           ),
           SizedBox(height: 15.0),
           Text(
-            company!.jobName,
+            company!.jobName!,
             style: kTitleStyle.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,

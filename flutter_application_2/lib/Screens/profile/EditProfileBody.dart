@@ -5,6 +5,8 @@ import 'package:job/constants.dart';
 import 'package:job/models/user.dart';
 import 'package:job/provider/FindJob_Provider.dart';
 
+import 'editProfileMenu.dart';
+
 class EditProfileBody extends StatefulWidget {
   final String username;
   const EditProfileBody({Key? key, required this.username}) : super(key: key);
@@ -27,11 +29,11 @@ final _addressCon = TextEditingController();
 class _EditProfileBodyState extends State<EditProfileBody> {
   String username;
   var id, password;
-    bool valueq1=true;
-    bool valueq2=false;
+  bool valueq1=true;
+  bool valueq2=false;
 
   _EditProfileBodyState(this.username);
-  bool? gender=true;
+  //bool? gender=true;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -63,13 +65,12 @@ class _EditProfileBodyState extends State<EditProfileBody> {
             future: FindJobProvider.fetchUserByEmail(this.username),
             builder: (context, snapshot){
               if(snapshot.hasError)
-                {
-                  print('lỗi ở detail user '+snapshot.error.toString());
-                }
+              {
+                print('lỗi ở detail user '+snapshot.error.toString());
+              }
               if(snapshot.hasData){
                 id=snapshot.data!.id;
                 password=snapshot.data!.password;
-                gender=snapshot.data!.gender;
                 return Column(
                   children: [
                     TextField(
@@ -162,6 +163,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                           Radio(
                             value: false,
                             groupValue: gender,
+                            toggleable: true,
                             onChanged: (bool? value) {
                               setState(() {
                                 gender = value!;
@@ -175,6 +177,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                           Radio(
                             value: true,
                             groupValue: gender,
+                            toggleable: true,
                             onChanged: (bool? value) {
                               setState(() {
                                 gender = value!;
@@ -318,7 +321,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
             });
           },
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           textColor: Colors.white,
           padding: const EdgeInsets.all(0),
           child: Container(

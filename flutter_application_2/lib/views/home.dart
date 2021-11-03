@@ -22,7 +22,6 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState(this.username);
 }
 
-// buon ngu vqai lz
 
 class _HomeState extends State<Home> {
   String username;
@@ -131,7 +130,8 @@ class _HomeState extends State<Home> {
                           width: double.infinity,
                           height: 190.0,
                           child: ListView.builder(
-                            itemCount: snapshot.data!.length,
+                            itemCount: 10,
+                            //snapshot.data!.length
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
                             physics: BouncingScrollPhysics(),
@@ -160,10 +160,12 @@ class _HomeState extends State<Home> {
                           "Danh sách công việc mới cập nhật",
                           style: kTitleStyle,
                         ),
+                        SizedBox(height: 35.0),
                         SizedBox(
-                          height: 100,
+                          height: 400,
                           child: ListView.builder(
-                            itemCount: snapshot.data!.length,
+                            itemCount: 20,
+                            //snapshot.data!.length
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             physics: ScrollPhysics(),

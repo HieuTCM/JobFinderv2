@@ -24,25 +24,25 @@ class CompanyCard2 extends StatelessWidget {
             children: <Widget>[
               Container(
                 width: 50.0,
-                height: 47.0,
+                height: 50.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.0),
                   image: DecorationImage(
-                    image: AssetImage("assets/" + company!.image),
+                    image: AssetImage("assets/hinhanh/" + company!.image!),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               Spacer(),
               Text(
-                company!.sallary,
+                company!.sallary!,
                 style: kTitleStyle,
               ),
             ],
           ),
           SizedBox(height: 15.0),
           Text(
-            company!.tag,
+            company!.jobName!,
             style: kTitleStyle,
           ),
           SizedBox(height: 15.0),
@@ -50,7 +50,7 @@ class CompanyCard2 extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: company!.workingTime,
+                  text: company!.city,
                   style: kSubtitleStyle,
                 ),
                 TextSpan(
@@ -58,7 +58,7 @@ class CompanyCard2 extends StatelessWidget {
                   style: kSubtitleStyle,
                 ),
                 TextSpan(
-                  text: company!.jobName,
+                  text: company!.sallary,
                   style: kSubtitleStyle,
                 ),
               ],

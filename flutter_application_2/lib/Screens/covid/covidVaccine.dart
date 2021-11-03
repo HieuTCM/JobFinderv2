@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:job/Screens/covid/covidVaccineBody.dart';
+import 'package:job/Screens/login/login.dart';
 import 'package:job/Screens/profile/editProfileMenu.dart';
 import 'package:job/Screens/profile/editprofile.dart';
 import 'package:job/constants.dart';
@@ -47,11 +48,11 @@ class covidVaccine extends StatelessWidget {
             print(dateString1);
             print(dateString2);
             print(userId);
-
+            String date2;
             // dateString2.compareTo("") == true ? "2021-01-01T11:31:32.155Z" : dateString2;
-
+            valueContent == 1 ? date2 = "Chưa tiêm mũi 2" : date2 = dateString2;
             CovidPassport covidPassport=new CovidPassport(
-                          id: 2,
+                          id: 1,
                           level: valueContent+1,
                           s1stInjectionDate: dateString1,
                           s2stInjectionDate: dateString2,
@@ -61,7 +62,8 @@ class covidVaccine extends StatelessWidget {
             Future<String> result=FindJobProvider.updateCovidPassport(covidPassport);
             result.then((value){
               print(value);
-              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditProfile(username: username1)));
             });
           },
           shape:

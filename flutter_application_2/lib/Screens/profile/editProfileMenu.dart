@@ -9,6 +9,7 @@ import 'package:job/Screens/covid/covidTest.dart';
 import 'package:job/Screens/covid/covidVaccine.dart';
 import 'package:job/Screens/edu/eduMainScreen.dart';
 import 'package:job/Screens/exp/expMainScreen.dart';
+import 'package:job/Screens/login/login.dart';
 import 'package:job/Screens/profile/EditProfileBody.dart';
 import 'package:job/Screens/profile/covidPassport.dart';
 import 'package:job/Screens/profile/edu.dart';
@@ -19,6 +20,7 @@ import 'package:job/Screens/skill/skillMainScreen.dart';
 import 'package:job/constants.dart';
 import 'package:job/models/CovidPassport.dart';
 import 'package:job/models/CovidTestPaper.dart';
+import 'package:job/models/JobSeekerEducation.dart';
 import 'package:job/models/JobSeekerWorkExperience.dart';
 import 'package:job/models/user.dart';
 import 'package:job/provider/FindJob_Provider.dart';
@@ -33,9 +35,9 @@ class editProfileMenu extends StatefulWidget {
   _editProfileMenuState createState() => _editProfileMenuState(this.username);
 }
 
-late int  userId=0;
+// late int  userId=0;
 late int sizeTestPaper=0;
-late String username1='';
+late bool gender=true;
 
 class _editProfileMenuState extends State<editProfileMenu> {
   String username;
@@ -49,7 +51,7 @@ class _editProfileMenuState extends State<editProfileMenu> {
     // int skill = Random().nextInt(2);
     int covidLevel = 3;
     String exp = "";
-    int edu = 2;
+    String edu = "";
     int skill = 2;
     //print(covidLevel);
     return SingleChildScrollView(
@@ -90,8 +92,9 @@ class _editProfileMenuState extends State<editProfileMenu> {
                 if(snapshot.hasError){
                   print('lỗi ở proflie menu '+snapshot.error.toString());
                 }if(snapshot.hasData){
-                  userId=snapshot.data!.id!;
-                  username1=snapshot.data!.userName!;
+                  // userId=snapshot.data!.id!;
+                  //username1=snapshot.data!.userName!;
+                  gender=snapshot.data!.gender!;
                   return FutureBuilder<List<CovidTestPaper>>(
                     future: FindJobProvider.fetchCovidTestPaper(userId),
                     builder: (context, snapshot){
@@ -245,7 +248,7 @@ class _editProfileMenuState extends State<editProfileMenu> {
                                 status: "F0 đã khỏi bệnh",
                                 level: "3",
                                 fDate: snapshot.data![index].s1stInjectionDate,
-                                sDate: snapshot.data![index].s2stInjectionDate)),
+                                sDate: "Bệnh nhân khỏi bệnh")),
                               )
                               : null,
                         );
@@ -452,23 +455,46 @@ class _editProfileMenuState extends State<editProfileMenu> {
             height: 15,
             thickness: 2,
           ),
-          Container(
-            child: edu == 0
-                ? Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                (Expanded(
-                  child: Text(
-                      "Bạn chưa có thông tin học vấn của mình trên JobsGO"),
-                )),
-              ],
-            )
-                : eduCart(
-                schoolName: "Đại học FPT",
-                majorName: "Kỹ sư phần mềm",
-                dateWorkin: "15/09/2017",
-                dateWorkout: "Hiện nay"),
+          FutureBuilder<List<JobSeekerEducation>>(
+              future: FindJobProvider.fetchJobSeekerEducation(userId),
+              builder: (context, snapshot){
+                if(snapshot.hasError){
+                  print('lỗi ở job education '+snapshot.error.toString());
+                }if(snapshot.hasData){
+                  return SizedBox(
+                    height: 150,
+                    child: ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (BuildContext context, int index){
+                          edu=snapshot.data![index].education;
+                          return  Container(
+                            child: edu == "no"
+                                ? Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                (Expanded(
+                                  child: Text(
+                                      "Bạn chưa có thông tin học vấn của mình trên JobsGO"),
+                                )),
+                              ],
+                            )
+                                : Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: eduCart(
+                                  schoolName: snapshot.data![index].schoolName,
+                                  majorName: snapshot.data![index].majors,
+                                  dateWorkin: snapshot.data![index].startDay,
+                                  dateWorkout: snapshot.data![index].endDay),
+                            ),
+                          );
+                        }
+                    ),
+                  );
+                }else{
+                  return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
+                }
+              }
           ),
           SizedBox(
             height: 15,

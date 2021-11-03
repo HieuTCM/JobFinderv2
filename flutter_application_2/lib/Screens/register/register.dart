@@ -134,10 +134,10 @@ class RegisterScreen extends StatelessWidget {
                       if (formKey.currentState!.validate()) {
                         String password='';
                         if(_passCon.text.compareTo(_repassCon.text)==true){
-                          password=_passCon.text;
+                          password =_passCon.text;
                         }
                         User user=new User(id: 0,fullname: _nameCon.text,address: 'vui long nhap dia chi', gender: true, age: 0,
-                            phonenumber: 0, email: 'vui long nhap email', userName: _usenameCon.text, password: password);
+                            phonenumber: 0, email: 'vui long nhap email', userName: _usenameCon.text, password: _passCon.text);
                         Future<String> result=FindJobProvider.createUser(user);
                         result.then((value){
                           print(value);

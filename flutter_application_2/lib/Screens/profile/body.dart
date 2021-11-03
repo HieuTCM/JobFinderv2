@@ -69,6 +69,7 @@ class _BodyState extends State<Body> {
                   icon: "assets/logout.svg",
                   text: "Đăng Xuất",
                   press: () {
+                    userId=0;
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => LoginScreen()));
                   }),

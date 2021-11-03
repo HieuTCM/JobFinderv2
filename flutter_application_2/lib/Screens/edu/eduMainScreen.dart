@@ -3,7 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:job/Screens/covid/covidBody.dart';
 import 'package:job/Screens/edu/eduBody.dart';
+import 'package:job/Screens/login/login.dart';
+import 'package:job/Screens/profile/editProfileMenu.dart';
+import 'package:job/Screens/profile/editprofile.dart';
 import 'package:job/constants.dart';
+import 'package:job/models/JobSeekerEducation.dart';
+import 'package:job/provider/FindJob_Provider.dart';
 
 class eduMainScreen extends StatelessWidget {
   @override
@@ -29,15 +34,27 @@ class eduMainScreen extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         child: RaisedButton(
           onPressed: () {
-            print(schooleNameCon.text);
-            print(majorNameCon.text);
-            print(valueCamketEdu);
-            print(dateStringEdu1);
-            print(dateStringEdu2);
+            String dateString2;
+            valueCamketEdu ? dateString2 = "Hiện nay" : dateString2 = dateStringEdu2;
+
+            JobSeekerEducation seekerEducation=new JobSeekerEducation(id: 0,
+                education: "yes",
+                userId: userId,
+                schoolName: schooleNameCon.text,
+                majors: majorNameCon.text,
+                startDay: dateStringEdu1,
+                endDay: dateString2,
+                isStillStudying: valueCamketEdu);
+            Future<String> result=FindJobProvider.createJobSeekerEducation(seekerEducation);
+            result.then((value){
+              print(value);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditProfile(username: username1)));
+            });
           },
           // onPressed: () => Navigator.pop(context),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           textColor: Colors.white,
           padding: const EdgeInsets.all(0),
           child: Container(

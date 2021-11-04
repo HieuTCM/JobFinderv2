@@ -14,7 +14,7 @@ import 'package:job/models/user.dart';
 
 class FindJobProvider
 {
-  static const String _mainUrl='https://10.0.2.2:5001/api';
+  static const String _mainUrl='http://3.129.62.14/api';
   static const String _login='/User/login?';
   static const String _getUserByUsername='/User/getByUsername?username=';
   static const String _postUser='/User/add';

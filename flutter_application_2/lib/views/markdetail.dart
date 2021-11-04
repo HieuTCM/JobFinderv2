@@ -162,7 +162,7 @@ class MarkDetail extends StatelessWidget {
                 ),
                 child: IconButton(
                   icon: Icon(Icons.bookmark_border),
-                  color: kBlack,
+                  color: Colors.red,
                   onPressed: () {
                     _delete(context);
                     // MarkJob markJob =

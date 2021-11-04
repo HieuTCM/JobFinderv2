@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:job/Screens/register/register.dart';
 import 'package:job/components/background.dart';
@@ -181,7 +182,28 @@ class _onLoginState extends State<onLogin> {
           future: FindJobProvider.Login(username, password),
           builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
             if (snapshot.hasError) {
-              print('Lỗi nè trùiii ' + snapshot.error.toString());
+              return Container(
+                child: AlertDialog(
+                  title: const Text('Đăng Nhập Không Thành Công'),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: const <Widget>[
+                        Text('Sai tài khoản hoặc mật khẩu.'),
+                        Text('Xin vui lòng kiểm tra lại.'),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text('Ok luôn nhó!'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+                color: Colors.white,
+              );
             }
             if (snapshot.hasData) {
               print(snapshot.data!.userName);
@@ -191,30 +213,12 @@ class _onLoginState extends State<onLogin> {
                 return Home(username: username1);
               } else {
                 return Container(
-                  child: AlertDialog(
-                    title: const Text('Đăng Nhập Không Thành Công'),
-                    content: SingleChildScrollView(
-                      child: ListBody(
-                        children: const <Widget>[
-                          Text('Sai tài khoản hoặc mật khẩu.'),
-                          Text('Xin vui lòng kiểm tra lại.'),
-                        ],
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        child: const Text('Ok luôn nhó!'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  ),
                 );
               }
             } else {
               return Container(
-                child: CircularProgressIndicator(),
+                child:Center(child: CircularProgressIndicator(color: Colors.orangeAccent)),
+                color: Colors.white,
               );
             }
           }),

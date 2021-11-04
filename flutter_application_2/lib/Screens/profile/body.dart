@@ -70,8 +70,11 @@ class _BodyState extends State<Body> {
                   text: "Đăng Xuất",
                   press: () {
                     userId=0;
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                LoginScreen()), (Route<dynamic> route) => false);
                   }),
             ],
           )),

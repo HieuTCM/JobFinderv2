@@ -12,9 +12,7 @@ final _phoneCon = TextEditingController();
 final _passCon = TextEditingController();
 final _repassCon = TextEditingController();
 
-
 class RegisterScreen extends StatelessWidget {
-
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -69,6 +67,8 @@ class RegisterScreen extends StatelessWidget {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Vui lòng không được để trống";
+                      } else if (value.length != 10) {
+                        return "Số điện thoại phải 10 số";
                       } else {
                         return null;
                       }
@@ -119,10 +119,9 @@ class RegisterScreen extends StatelessWidget {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Vui lòng không được để trống";
-                      }else if(_passCon.text != _repassCon.text){
+                      } else if (_passCon.text != _repassCon.text) {
                         return "Không trùng khớp với mật khẩu";
-                      }
-                      else {
+                      } else {
                         return null;
                       }
                     },
@@ -136,29 +135,39 @@ class RegisterScreen extends StatelessWidget {
                   child: RaisedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        String password='';
-                        if(_passCon.text == _repassCon.text){
-                          password =_repassCon.text;
-                          User user=new User(id: 0,fullname: _nameCon.text,address: 'vui lòng nhập email', gender: true, age: 0,
-                              phonenumber: int.parse(_passCon.text), email: 'vui lòng nhập địa chỉ', userName: _usenameCon.text, password: password);
-                          Future<String> result=FindJobProvider.createUser(user);
-                          result.then((value){
+                        String password = '';
+                        if (_passCon.text == _repassCon.text) {
+                          password = _repassCon.text;
+                          User user = new User(
+                              id: 0,
+                              fullname: _nameCon.text,
+                              address: 'a',
+                              gender: true,
+                              age: 0,
+                              phonenumber: int.parse(_phoneCon.text),
+                              email: 'a',
+                              userName: _usenameCon.text,
+                              password: password);
+                          Future<String> result =
+                              FindJobProvider.createUser(user);
+                          result.then((value) {
                             print(value);
                             final snackBar = SnackBar(
                               content: const Text('Đăng kí thành công'),
                               action: SnackBarAction(
                                 label: 'Trở lại để login thui nè ^_^',
                                 onPressed: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()));
                                 },
                               ),
                             );
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           });
-                        }else{
-
-                        }
+                        } else {}
                       } else {}
                     },
                     shape: RoundedRectangleBorder(

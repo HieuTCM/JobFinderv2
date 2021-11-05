@@ -31,7 +31,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
   var id, password;
   bool valueq1 = true;
   bool valueq2 = false;
-  String email = "", diachi = "";
+  String email = "", addr = "";
   _EditProfileBodyState(this.username);
   //bool? gender=true;
   @override
@@ -68,12 +68,6 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                 print('lỗi ở detail user ' + snapshot.error.toString());
               }
               if (snapshot.hasData) {
-                snapshot.data!.email.toString() == "a"
-                    ? email = "Vui lòng nhập Email"
-                    : email = snapshot.data!.email.toString();
-                snapshot.data!.address.toString() == "a"
-                    ? diachi = "Vui lòng nhập địa chỉ"
-                    : diachi = snapshot.data!.address.toString();
                 id = snapshot.data!.id;
                 password = snapshot.data!.password;
                 return Column(
@@ -245,7 +239,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                             extentOffset: _emailCon.text.length);
                       },
                       keyboardType: TextInputType.emailAddress,
-                      controller: _emailCon..text = email,
+                      controller: _emailCon
+                        ..text = snapshot.data!.email.toString(),
                       readOnly: _editEmail,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -282,7 +277,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                             extentOffset: _addressCon.text.length);
                       },
                       keyboardType: TextInputType.number,
-                      controller: _addressCon..text = diachi,
+                      controller: _addressCon
+                        ..text = snapshot.data!.address.toString(),
                       readOnly: _editAddress,
                       obscureText: false,
                       decoration: InputDecoration(

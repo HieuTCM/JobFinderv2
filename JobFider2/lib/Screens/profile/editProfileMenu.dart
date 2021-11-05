@@ -36,17 +36,12 @@ class editProfileMenu extends StatefulWidget {
 }
 
 // late int  userId=0;
-<<<<<<< HEAD
-late int sizeTestPaper = 0;
-late bool gender = true;
-=======
 late int sizeTestPaper=0;
 late bool gender=true;
 int passportCount=0;
 int testpaperCount=0;
 int expCount=0;
 int eduCount=0;
->>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
 
 class _editProfileMenuState extends State<editProfileMenu> {
   String username;
@@ -72,9 +67,7 @@ class _editProfileMenuState extends State<editProfileMenu> {
           SizedBox(
             height: 20,
           ),
-          EditProfileBody(
-            username: this.username,
-          ),
+          EditProfileBody(username: this.username,),
           SizedBox(
             height: 20,
           ),
@@ -99,46 +92,15 @@ class _editProfileMenuState extends State<editProfileMenu> {
           ),
           FutureBuilder<User>(
               future: FindJobProvider.fetchUserByEmail(username),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  print('lỗi ở proflie menu ' + snapshot.error.toString());
-                }
-                if (snapshot.hasData) {
+              builder: (context, snapshot){
+                if(snapshot.hasError){
+                  print('lỗi ở proflie menu '+snapshot.error.toString());
+                }if(snapshot.hasData){
                   // userId=snapshot.data!.id!;
                   //username1=snapshot.data!.userName!;
-                  gender = snapshot.data!.gender!;
+                  gender=snapshot.data!.gender!;
                   return FutureBuilder<List<CovidTestPaper>>(
                     future: FindJobProvider.fetchCovidTestPaper(userId),
-<<<<<<< HEAD
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        print(
-                            'lỗi ở proflie menu ' + snapshot.error.toString());
-                      }
-                      if (snapshot.hasData) {
-                        sizeTestPaper = snapshot.data!.length;
-                        return SizedBox(
-                          height: 150,
-                          child: ListView.builder(
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                child: covidCart(
-                                    status: "Có giấy xác nhận âm tính",
-                                    level: "1",
-                                    fDate: snapshot.data![index].date,
-                                    sDate: snapshot.data![index].date),
-                              );
-                            },
-                          ),
-                        );
-                      } else {
-                        return Center(
-                            child: CircularProgressIndicator(
-                          color: Colors.orangeAccent,
-                        ));
-=======
                     builder: (context, snapshot){
                       if(snapshot.hasError){
                       print('lỗi ở proflie menu '+snapshot.error.toString());
@@ -177,17 +139,14 @@ class _editProfileMenuState extends State<editProfileMenu> {
                         }
                       }else{
                         return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
->>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
                       }
                     },
                   );
-                } else {
-                  return Center(
-                      child: CircularProgressIndicator(
-                    color: Colors.orangeAccent,
-                  ));
+                }else{
+                  return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
                 }
-              }),
+              }
+          ),
           SizedBox(
             height: 10,
           ),
@@ -251,91 +210,6 @@ class _editProfileMenuState extends State<editProfileMenu> {
           ),
           FutureBuilder<List<CovidPassport>>(
             future: FindJobProvider.fetchCovidPassport(userId),
-<<<<<<< HEAD
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                print("lỗi ở profile menu " + snapshot.error.toString());
-              }
-              if (snapshot.hasData) {
-                return SizedBox(
-                  height: 150,
-                  child: ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        covidLevel = snapshot.data![index].level;
-                        return Container(
-                          child: covidLevel == 0
-                              ? Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    (Expanded(
-                                      child: Text(
-                                          "Chưa có thông tin! Nếu bạn đã tiêm vaccine hoặc là F0 đã khỏi bệnh, hãy khai báo để được ưu tiên duyệt đi làm."),
-                                    )),
-                                  ],
-                                )
-                              : covidLevel == 1
-                                  ? Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 0, 0, 10),
-                                      child: (covidCart(
-                                          status: "Có giấy xác nhận âm tính",
-                                          level: "1",
-                                          fDate: snapshot
-                                              .data![index].s1stInjectionDate,
-                                          sDate: snapshot
-                                              .data![index].s2stInjectionDate)),
-                                    )
-                                  : covidLevel == 2
-                                      ? Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 0, 0, 10),
-                                          child: (covidCart(
-                                              status: "Đã tiêm 1 mũi",
-                                              level: "2",
-                                              fDate: snapshot.data![index]
-                                                  .s1stInjectionDate,
-                                              sDate: snapshot.data![index]
-                                                  .s2stInjectionDate)),
-                                        )
-                                      : covidLevel == 3
-                                          ? Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0, 0, 0, 10),
-                                              child: (covidCart(
-                                                  status: "Đã tiêm 2 mũi",
-                                                  level: "3",
-                                                  fDate: snapshot.data![index]
-                                                      .s1stInjectionDate,
-                                                  sDate: snapshot.data![index]
-                                                      .s2stInjectionDate)),
-                                            )
-                                          : covidLevel == 4
-                                              ? Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0, 0, 0, 10),
-                                                  child: (covidCart(
-                                                      status: "F0 đã khỏi bệnh",
-                                                      level: "3",
-                                                      fDate: snapshot
-                                                          .data![index]
-                                                          .s1stInjectionDate,
-                                                      sDate:
-                                                          "Bệnh nhân khỏi bệnh")),
-                                                )
-                                              : null,
-                        );
-                      }),
-                );
-              } else {
-                return Center(
-                    child: CircularProgressIndicator(
-                  color: Colors.orangeAccent,
-                ));
-=======
             builder: (context, snapshot){
               if(snapshot.hasError){
                 print("lỗi ở profile menu "+snapshot.error.toString());
@@ -405,7 +279,6 @@ class _editProfileMenuState extends State<editProfileMenu> {
                 }
               }else{
                 return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
->>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
               }
             },
           ),
@@ -512,54 +385,6 @@ class _editProfileMenuState extends State<editProfileMenu> {
           ),
           FutureBuilder<List<JobSeekerWorkExperience>>(
             future: FindJobProvider.fetchJobSeekerWorkExperience(userId),
-<<<<<<< HEAD
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                print('lỗi ở work experience ' + snapshot.error.toString());
-              }
-              if (snapshot.hasData) {
-                return SizedBox(
-                  height: 200,
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      exp = snapshot.data![index].experience.toString();
-                      return Container(
-                        child: exp == "no"
-                            ? Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  (Expanded(
-                                    child: Text(
-                                        "Điền thông tin về các công việc bạn đã từng làm trước đây để làm đẹp hồ sơ và tăng khả năng được duyệt khi nhận việc"),
-                                  )),
-                                ],
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                child: expCart(
-                                    companyName: snapshot.data![index].company
-                                        .toString(),
-                                    positionName:
-                                        snapshot.data![index].job.toString(),
-                                    dateWorkin: snapshot.data![index].startDay
-                                        .toString(),
-                                    dateWorkout:
-                                        snapshot.data![index].endDay.toString(),
-                                    countTime:
-                                        " (Tu update chu ai gank tinh dum)"),
-                              ),
-                      );
-                    },
-                  ),
-                );
-              } else {
-                return Center(
-                    child: CircularProgressIndicator(
-                  color: Colors.orangeAccent,
-                ));
-=======
             builder: (context, snapshot){
               if(snapshot.hasError){
                 print('lỗi ở work experience '+snapshot.error.toString());
@@ -600,7 +425,6 @@ class _editProfileMenuState extends State<editProfileMenu> {
                 }
               }else{
                 return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
->>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
               }
             },
           ),
@@ -658,52 +482,6 @@ class _editProfileMenuState extends State<editProfileMenu> {
           ),
           FutureBuilder<List<JobSeekerEducation>>(
               future: FindJobProvider.fetchJobSeekerEducation(userId),
-<<<<<<< HEAD
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  print('lỗi ở job education ' + snapshot.error.toString());
-                }
-                if (snapshot.hasData) {
-                  return SizedBox(
-                    height: 150,
-                    child: ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          edu = snapshot.data![index].education;
-                          return Container(
-                            child: edu == "no"
-                                ? Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      (Expanded(
-                                        child: Text(
-                                            "Bạn chưa có thông tin học vấn của mình trên JobsGO"),
-                                      )),
-                                    ],
-                                  )
-                                : Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                    child: eduCart(
-                                        schoolName:
-                                            snapshot.data![index].schoolName,
-                                        majorName: snapshot.data![index].majors,
-                                        dateWorkin:
-                                            snapshot.data![index].startDay,
-                                        dateWorkout:
-                                            snapshot.data![index].endDay),
-                                  ),
-                          );
-                        }),
-                  );
-                } else {
-                  return Center(
-                      child: CircularProgressIndicator(
-                    color: Colors.orangeAccent,
-                  ));
-=======
               builder: (context, snapshot){
                 if(snapshot.hasError){
                   print('lỗi ở job education '+snapshot.error.toString());
@@ -743,9 +521,9 @@ class _editProfileMenuState extends State<editProfileMenu> {
                   }
                 }else{
                   return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
->>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
                 }
-              }),
+              }
+          ),
           SizedBox(
             height: 15,
           ),
@@ -801,15 +579,15 @@ class _editProfileMenuState extends State<editProfileMenu> {
           Container(
             child: skill == 0
                 ? Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      (Expanded(
-                        child: Text(
-                            "Cập nhật kỹ năng của bạn để gây ấn tượng với nhà tuyển dụng"),
-                      )),
-                    ],
-                  )
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                (Expanded(
+                  child: Text(
+                      "Cập nhật kỹ năng của bạn để gây ấn tượng với nhà tuyển dụng"),
+                )),
+              ],
+            )
                 : skillMenu(),
           ),
           SizedBox(
@@ -856,3 +634,4 @@ class _editProfileMenuState extends State<editProfileMenu> {
     );
   }
 }
+

@@ -416,7 +416,7 @@ class _editProfileMenuState extends State<editProfileMenu> {
                                 positionName: snapshot.data![index].job.toString(),
                                 dateWorkin: snapshot.data![index].startDay.toString(),
                                 dateWorkout: snapshot.data![index].endDay.toString(),
-                                countTime: " (Tu update chu ai gank tinh dum)")
+                                countTime: "")
                           )
                         );
                       },

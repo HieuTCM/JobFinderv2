@@ -82,7 +82,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                       keyboardType: TextInputType.text,
                       controller: _nameCon
                         ..text = snapshot.data!.fullname.toString(),
-                      readOnly: _editFullName,
+                      /*readOnly: _editFullName,*/
                       obscureText: false,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -119,7 +119,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                       },
                       keyboardType: TextInputType.number,
                       controller: _ageCon..text = snapshot.data!.age.toString(),
-                      readOnly: _editAge,
+                      /*readOnly: _editAge,*/
                       obscureText: false,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -202,8 +202,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                       },
                       keyboardType: TextInputType.number,
                       controller: _phoneCon
-                        ..text = snapshot.data!.phonenumber.toString(),
-                      readOnly: _editPhone,
+                        ..text = "0"+snapshot.data!.phonenumber.toString(),
+                      /*readOnly: _editPhone,*/
                       obscureText: false,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -241,7 +241,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailCon
                         ..text = snapshot.data!.email.toString(),
-                      readOnly: _editEmail,
+                      /*readOnly: _editEmail,*/
                       obscureText: false,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -276,10 +276,10 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                             baseOffset: _addressCon.text.length,
                             extentOffset: _addressCon.text.length);
                       },
-                      keyboardType: TextInputType.number,
+                      /*keyboardType: TextInputType.number,*/
                       controller: _addressCon
                         ..text = snapshot.data!.address.toString(),
-                      readOnly: _editAddress,
+                      /*readOnly: _editAddress,*/
                       obscureText: false,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(

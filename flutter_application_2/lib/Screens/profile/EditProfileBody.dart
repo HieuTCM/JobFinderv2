@@ -29,9 +29,9 @@ final _addressCon = TextEditingController();
 class _EditProfileBodyState extends State<EditProfileBody> {
   String username;
   var id, password;
-  bool valueq1=true;
-  bool valueq2=false;
-
+  bool valueq1 = true;
+  bool valueq2 = false;
+  String email = "", addr = "";
   _EditProfileBodyState(this.username);
   //bool? gender=true;
   @override
@@ -63,14 +63,13 @@ class _EditProfileBodyState extends State<EditProfileBody> {
         Container(
           child: FutureBuilder<User>(
             future: FindJobProvider.fetchUserByEmail(this.username),
-            builder: (context, snapshot){
-              if(snapshot.hasError)
-              {
-                print('lỗi ở detail user '+snapshot.error.toString());
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print('lỗi ở detail user ' + snapshot.error.toString());
               }
-              if(snapshot.hasData){
-                id=snapshot.data!.id;
-                password=snapshot.data!.password;
+              if (snapshot.hasData) {
+                id = snapshot.data!.id;
+                password = snapshot.data!.password;
                 return Column(
                   children: [
                     TextField(
@@ -81,7 +80,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                             extentOffset: _nameCon.text.length);
                       },
                       keyboardType: TextInputType.text,
-                      controller: _nameCon..text = snapshot.data!.fullname.toString(),
+                      controller: _nameCon
+                        ..text = snapshot.data!.fullname.toString(),
                       readOnly: _editFullName,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -96,7 +96,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                               color: Colors.grey,
                             ),
                           ),
-                          contentPadding: EdgeInsets.only(bottom: 20, top: 20, left: 20),
+                          contentPadding:
+                              EdgeInsets.only(bottom: 20, top: 20, left: 20),
                           labelText: "Họ và Tên",
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: OutlineInputBorder(),
@@ -132,7 +133,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                               color: Colors.grey,
                             ),
                           ),
-                          contentPadding: EdgeInsets.only(bottom: 20, top: 20, left: 20),
+                          contentPadding:
+                              EdgeInsets.only(bottom: 20, top: 20, left: 20),
                           labelText: "Tuổi",
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: OutlineInputBorder(),
@@ -151,11 +153,11 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(
-                                    'Giới tính',
-                                    style: kTitleStyle,
-                                  ),
-                                ]))),
+                              Text(
+                                'Giới tính',
+                                style: kTitleStyle,
+                              ),
+                            ]))),
                     Container(
                       margin: EdgeInsets.only(right: 18.0),
                       child: Row(
@@ -199,7 +201,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                             extentOffset: _phoneCon.text.length);
                       },
                       keyboardType: TextInputType.number,
-                      controller: _phoneCon..text = snapshot.data!.phonenumber.toString(),
+                      controller: _phoneCon
+                        ..text = snapshot.data!.phonenumber.toString(),
                       readOnly: _editPhone,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -214,7 +217,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                               color: Colors.grey,
                             ),
                           ),
-                          contentPadding: EdgeInsets.only(bottom: 20, top: 20, left: 20),
+                          contentPadding:
+                              EdgeInsets.only(bottom: 20, top: 20, left: 20),
                           labelText: "Số điện thoại",
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: OutlineInputBorder(),
@@ -235,7 +239,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                             extentOffset: _emailCon.text.length);
                       },
                       keyboardType: TextInputType.emailAddress,
-                      controller: _emailCon..text = snapshot.data!.email.toString(),
+                      controller: _emailCon
+                        ..text = snapshot.data!.email.toString(),
                       readOnly: _editEmail,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -250,7 +255,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                               color: Colors.grey,
                             ),
                           ),
-                          contentPadding: EdgeInsets.only(bottom: 20, top: 20, left: 20),
+                          contentPadding:
+                              EdgeInsets.only(bottom: 20, top: 20, left: 20),
                           labelText: "Email",
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: OutlineInputBorder(),
@@ -271,7 +277,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                             extentOffset: _addressCon.text.length);
                       },
                       keyboardType: TextInputType.number,
-                      controller: _addressCon..text = snapshot.data!.address.toString(),
+                      controller: _addressCon
+                        ..text = snapshot.data!.address.toString(),
                       readOnly: _editAddress,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -286,7 +293,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                               color: Colors.grey,
                             ),
                           ),
-                          contentPadding: EdgeInsets.only(bottom: 20, top: 20, left: 20),
+                          contentPadding:
+                              EdgeInsets.only(bottom: 20, top: 20, left: 20),
                           labelText: "Địa chỉ",
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: OutlineInputBorder(),
@@ -296,32 +304,41 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                             color: Colors.black,
                           )),
                     ),
-
                     SizedBox(
                       height: 10,
                     ),
-
                   ],
                 );
-              }else{
-                return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
+              } else {
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: Colors.orangeAccent,
+                ));
               }
             },
           ),
         ),
         RaisedButton(
           onPressed: () {
-            User user=new User(id: id,fullname: _nameCon.text,address: _addressCon.text, gender: gender, age: int.parse(_ageCon.text),
-                phonenumber: int.parse(_phoneCon.text), email: _emailCon.text, userName: this.username, password: password);
-            Future<String> result=FindJobProvider.updateUser(user, id);
-            result.then((value){
+            User user = new User(
+                id: id,
+                fullname: _nameCon.text,
+                address: _addressCon.text,
+                gender: gender,
+                age: int.parse(_ageCon.text),
+                phonenumber: int.parse(_phoneCon.text),
+                email: _emailCon.text,
+                userName: this.username,
+                password: password);
+            Future<String> result = FindJobProvider.updateUser(user, id);
+            result.then((value) {
               _showToast(context, value);
               print(value);
               print(_nameCon.text);
             });
           },
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           textColor: Colors.white,
           padding: const EdgeInsets.all(0),
           child: Container(
@@ -355,5 +372,4 @@ class _EditProfileBodyState extends State<EditProfileBody> {
       ),
     );
   }
-
 }

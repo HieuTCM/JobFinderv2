@@ -13,7 +13,6 @@ final _passCon = TextEditingController();
 final _repassCon = TextEditingController();
 
 class RegisterScreen extends StatelessWidget {
-
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -68,8 +67,9 @@ class RegisterScreen extends StatelessWidget {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Vui lòng không được để trống";
-                      }
-                      else {
+                      } else if (value.length != 10) {
+                        return "Số điện thoại phải có 10 số";
+                      } else {
                         return null;
                       }
                     },
@@ -85,8 +85,7 @@ class RegisterScreen extends StatelessWidget {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Vui lòng không được để trống";
-                      }
-                      else {
+                      } else {
                         return null;
                       }
                     },
@@ -120,10 +119,9 @@ class RegisterScreen extends StatelessWidget {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Vui lòng không được để trống";
-                      }else if(_passCon.text != _repassCon.text){
+                      } else if (_passCon.text != _repassCon.text) {
                         return "Không trùng khớp với mật khẩu";
-                      }
-                      else {
+                      } else {
                         return null;
                       }
                     },
@@ -137,30 +135,47 @@ class RegisterScreen extends StatelessWidget {
                   child: RaisedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        String password='';
-                        if(_passCon.text == _repassCon.text){
-                          password =_repassCon.text;
-                          User user=new User(id: 0,fullname: _nameCon.text,address: 'vui lòng nhập email', gender: true, age: 0,
-                              phonenumber: int.parse(_phoneCon.text), email: 'vui lòng nhập địa chỉ', userName: _usenameCon.text, password: password);
-                          Future<String> result=FindJobProvider.createUser(user);
-                          result.then((value){
-                            value.contains("Add Success") ?
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: const Text('Đăng kí thành công'),
-                              action: SnackBarAction(
-                                label: 'Trở lại để login thui nè ^_^',
-                                onPressed: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) => LoginScreen()));
-                                },
-                              ),
-                            ))
-                                : value.contains("Phonenumber is aleardy exits") ? _showToast(context, 'Số điện thoại này đã đăng ký') :
-                                  value.contains("Username is aleardy exits")  ?   _showToast(context, 'Tên đăng nhập này đã tồn tại') : null;
+                        String password = '';
+                        if (_passCon.text == _repassCon.text) {
+                          password = _repassCon.text;
+                          User user = new User(
+                              id: 0,
+                              fullname: _nameCon.text,
+                              address: 'vui lòng nhập email',
+                              gender: true,
+                              age: 0,
+                              phonenumber: int.parse(_phoneCon.text),
+                              email: 'vui lòng nhập địa chỉ',
+                              userName: _usenameCon.text,
+                              password: password);
+                          Future<String> result =
+                              FindJobProvider.createUser(user);
+                          result.then((value) {
+                            value.contains("Add Success")
+                                ? ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: const Text('Đăng kí thành công'),
+                                    action: SnackBarAction(
+                                      label: 'Trở lại để login thui nè ^_^',
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoginScreen()));
+                                      },
+                                    ),
+                                  ))
+                                : value.contains("Phonenumber is aleardy exits")
+                                    ? _showToast(
+                                        context, 'Số điện thoại này đã đăng ký')
+                                    : value.contains(
+                                            "Username is aleardy exits")
+                                        ? _showToast(context,
+                                            'Tên đăng nhập này đã tồn tại')
+                                        : null;
                           });
-                        }else{
-
-                        }
+                        } else {}
                       } else {}
                     },
                     shape: RoundedRectangleBorder(
@@ -212,6 +227,7 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
+
   void _showToast(BuildContext context, String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),

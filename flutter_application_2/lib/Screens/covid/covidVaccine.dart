@@ -51,20 +51,37 @@ class covidVaccine extends StatelessWidget {
             String date2;
             // dateString2.compareTo("") == true ? "2021-01-01T11:31:32.155Z" : dateString2;
             valueContent == 1 ? date2 = "Chưa tiêm mũi 2" : date2 = dateString2;
-            CovidPassport covidPassport=new CovidPassport(
-                          id: 1,
-                          level: valueContent+1,
-                          s1stInjectionDate: dateString1,
-                          s2stInjectionDate: dateString2,
-                          image: 'image',
-                          qrCode: 'qrCode',
-                          userId: userId);
-            Future<String> result=FindJobProvider.updateCovidPassport(covidPassport);
-            result.then((value){
-              print(value);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditProfile(username: username1)));
-            });
+            if(passportCount == 0){
+              CovidPassport covidPassport=new CovidPassport(
+                  id: 0,
+                  level: valueContent+1,
+                  s1stInjectionDate: dateString1,
+                  s2stInjectionDate: dateString2,
+                  image: 'image',
+                  qrCode: 'qrCode',
+                  userId: userId);
+              Future<String> result=FindJobProvider.createCovidPassport(covidPassport);
+              result.then((value){
+                print(value);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EditProfile(username: username1)));
+              });
+            }else{
+              CovidPassport covidPassport=new CovidPassport(
+                  id: 1,
+                  level: valueContent+1,
+                  s1stInjectionDate: dateString1,
+                  s2stInjectionDate: dateString2,
+                  image: 'image',
+                  qrCode: 'qrCode',
+                  userId: userId);
+              Future<String> result=FindJobProvider.updateCovidPassport(covidPassport);
+              result.then((value){
+                print(value);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EditProfile(username: username1)));
+              });
+            }
           },
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

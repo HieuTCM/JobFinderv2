@@ -36,8 +36,17 @@ class editProfileMenu extends StatefulWidget {
 }
 
 // late int  userId=0;
+<<<<<<< HEAD
 late int sizeTestPaper = 0;
 late bool gender = true;
+=======
+late int sizeTestPaper=0;
+late bool gender=true;
+int passportCount=0;
+int testpaperCount=0;
+int expCount=0;
+int eduCount=0;
+>>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
 
 class _editProfileMenuState extends State<editProfileMenu> {
   String username;
@@ -100,6 +109,7 @@ class _editProfileMenuState extends State<editProfileMenu> {
                   gender = snapshot.data!.gender!;
                   return FutureBuilder<List<CovidTestPaper>>(
                     future: FindJobProvider.fetchCovidTestPaper(userId),
+<<<<<<< HEAD
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         print(
@@ -128,6 +138,46 @@ class _editProfileMenuState extends State<editProfileMenu> {
                             child: CircularProgressIndicator(
                           color: Colors.orangeAccent,
                         ));
+=======
+                    builder: (context, snapshot){
+                      if(snapshot.hasError){
+                      print('lỗi ở proflie menu '+snapshot.error.toString());
+                      }if(snapshot.hasData){
+                        sizeTestPaper=snapshot.data!.length;
+                        testpaperCount=snapshot.data!.length;
+                        if(testpaperCount == 0){
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              (Expanded(
+                                child: Text(
+                                    "Chưa có thông tin! Nếu bạn đã giấy xác nhận, hãy khai báo để được ưu tiên duyệt đi làm."),
+                              )),
+                            ],
+                          );
+                        }else{
+                          return SizedBox(
+                            height: 150,
+                            child: ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (BuildContext context, int index){
+                                return Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                  child: covidCart(
+                                      status: "Có giấy xác nhận âm tính",
+                                      level: "1",
+                                      fDate: snapshot.data![index].date,
+                                      sDate: snapshot.data![index].date
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                      }else{
+                        return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
+>>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
                       }
                     },
                   );
@@ -201,6 +251,7 @@ class _editProfileMenuState extends State<editProfileMenu> {
           ),
           FutureBuilder<List<CovidPassport>>(
             future: FindJobProvider.fetchCovidPassport(userId),
+<<<<<<< HEAD
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 print("lỗi ở profile menu " + snapshot.error.toString());
@@ -284,6 +335,77 @@ class _editProfileMenuState extends State<editProfileMenu> {
                     child: CircularProgressIndicator(
                   color: Colors.orangeAccent,
                 ));
+=======
+            builder: (context, snapshot){
+              if(snapshot.hasError){
+                print("lỗi ở profile menu "+snapshot.error.toString());
+              }if(snapshot.hasData){
+                passportCount = snapshot.data!.length;
+                print('số passport '+passportCount.toString());
+                if(passportCount == 0){
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      (Expanded(
+                        child: Text(
+                            "Chưa có thông tin! Nếu bạn đã tiêm vaccine hoặc là F0 đã khỏi bệnh, hãy khai báo để được ưu tiên duyệt đi làm."),
+                      )),
+                    ],
+                  );
+                }else{
+                  return SizedBox(
+                    height: 150,
+                    child: ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (BuildContext context, int index){
+                          covidLevel=snapshot.data![index].level;
+                          return  Container(
+                            child: covidLevel == 1
+                                ? Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: (covidCart(
+                                  status: "Có giấy xác nhận âm tính",
+                                  level: "1",
+                                  fDate: snapshot.data![index].s1stInjectionDate,
+                                  sDate: snapshot.data![index].s2stInjectionDate)),
+                            )
+                                : covidLevel == 2
+                                ? Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: (covidCart(
+                                  status: "Đã tiêm 1 mũi",
+                                  level: "2",
+                                  fDate: snapshot.data![index].s1stInjectionDate,
+                                  sDate: snapshot.data![index].s2stInjectionDate)),
+                            )
+                                : covidLevel == 3
+                                ? Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: (covidCart(
+                                  status: "Đã tiêm 2 mũi",
+                                  level: "3",
+                                  fDate: snapshot.data![index].s1stInjectionDate,
+                                  sDate: snapshot.data![index].s2stInjectionDate)),
+                            )
+                                : covidLevel == 4
+                                ? Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: (covidCart(
+                                  status: "F0 đã khỏi bệnh",
+                                  level: "3",
+                                  fDate: snapshot.data![index].s1stInjectionDate,
+                                  sDate: "Bệnh nhân khỏi bệnh")),
+                            )
+                                : null,
+                          );
+                        }
+                    ),
+                  );
+                }
+              }else{
+                return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
+>>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
               }
             },
           ),
@@ -390,6 +512,7 @@ class _editProfileMenuState extends State<editProfileMenu> {
           ),
           FutureBuilder<List<JobSeekerWorkExperience>>(
             future: FindJobProvider.fetchJobSeekerWorkExperience(userId),
+<<<<<<< HEAD
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 print('lỗi ở work experience ' + snapshot.error.toString());
@@ -436,6 +559,48 @@ class _editProfileMenuState extends State<editProfileMenu> {
                     child: CircularProgressIndicator(
                   color: Colors.orangeAccent,
                 ));
+=======
+            builder: (context, snapshot){
+              if(snapshot.hasError){
+                print('lỗi ở work experience '+snapshot.error.toString());
+              }if(snapshot.hasData){
+                expCount = snapshot.data!.length;
+                if(expCount == 0){
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      (Expanded(
+                        child: Text(
+                            "Điền thông tin về các công việc bạn đã từng làm trước đây để làm đẹp hồ sơ và tăng khả năng được duyệt khi nhận việc"),
+                      )),
+                    ],
+                  );
+                }else{
+                  return SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (BuildContext context, int index){
+                        exp=snapshot.data![index].experience.toString();
+                        return Container(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                            child: expCart(
+                                companyName: snapshot.data![index].company.toString(),
+                                positionName: snapshot.data![index].job.toString(),
+                                dateWorkin: snapshot.data![index].startDay.toString(),
+                                dateWorkout: snapshot.data![index].endDay.toString(),
+                                countTime: " (Tu update chu ai gank tinh dum)")
+                          )
+                        );
+                      },
+                    ),
+                  );
+                }
+              }else{
+                return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
+>>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
               }
             },
           ),
@@ -493,6 +658,7 @@ class _editProfileMenuState extends State<editProfileMenu> {
           ),
           FutureBuilder<List<JobSeekerEducation>>(
               future: FindJobProvider.fetchJobSeekerEducation(userId),
+<<<<<<< HEAD
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   print('lỗi ở job education ' + snapshot.error.toString());
@@ -537,6 +703,47 @@ class _editProfileMenuState extends State<editProfileMenu> {
                       child: CircularProgressIndicator(
                     color: Colors.orangeAccent,
                   ));
+=======
+              builder: (context, snapshot){
+                if(snapshot.hasError){
+                  print('lỗi ở job education '+snapshot.error.toString());
+                }if(snapshot.hasData){
+                  eduCount = snapshot.data!.length;
+                  if(eduCount == 0){
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        (Expanded(
+                          child: Text(
+                              "Bạn chưa có thông tin học vấn của mình trên JobsGO"),
+                        )),
+                      ],
+                    );
+                  }else{
+                    return SizedBox(
+                      height: 150,
+                      child: ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (BuildContext context, int index){
+                            edu=snapshot.data![index].education;
+                            return  Container(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                child: eduCart(
+                                    schoolName: snapshot.data![index].schoolName,
+                                    majorName: snapshot.data![index].majors,
+                                    dateWorkin: snapshot.data![index].startDay,
+                                    dateWorkout: snapshot.data![index].endDay),
+                              ),
+                            );
+                          }
+                      ),
+                    );
+                  }
+                }else{
+                  return Center(child: CircularProgressIndicator(color: Colors.orangeAccent,));
+>>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
                 }
               }),
           SizedBox(

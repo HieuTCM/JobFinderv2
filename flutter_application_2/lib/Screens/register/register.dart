@@ -67,9 +67,14 @@ class RegisterScreen extends StatelessWidget {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Vui lòng không được để trống";
+<<<<<<< HEAD
                       } else if (value.length != 10) {
                         return "Số điện thoại phải 10 số";
                       } else {
+=======
+                      }
+                      else {
+>>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
                         return null;
                       }
                     },
@@ -85,7 +90,8 @@ class RegisterScreen extends StatelessWidget {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Vui lòng không được để trống";
-                      } else {
+                      }
+                      else {
                         return null;
                       }
                     },
@@ -135,6 +141,7 @@ class RegisterScreen extends StatelessWidget {
                   child: RaisedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
+<<<<<<< HEAD
                         String password = '';
                         if (_passCon.text == _repassCon.text) {
                           password = _repassCon.text;
@@ -153,6 +160,17 @@ class RegisterScreen extends StatelessWidget {
                           result.then((value) {
                             print(value);
                             final snackBar = SnackBar(
+=======
+                        String password='';
+                        if(_passCon.text == _repassCon.text){
+                          password =_repassCon.text;
+                          User user=new User(id: 0,fullname: _nameCon.text,address: 'vui lòng nhập email', gender: true, age: 0,
+                              phonenumber: int.parse(_phoneCon.text), email: 'vui lòng nhập địa chỉ', userName: _usenameCon.text, password: password);
+                          Future<String> result=FindJobProvider.createUser(user);
+                          result.then((value){
+                            value.contains("Add Success") ?
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+>>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
                               content: const Text('Đăng kí thành công'),
                               action: SnackBarAction(
                                 label: 'Trở lại để login thui nè ^_^',
@@ -163,9 +181,15 @@ class RegisterScreen extends StatelessWidget {
                                           builder: (context) => LoginScreen()));
                                 },
                               ),
+<<<<<<< HEAD
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
+=======
+                            ))
+                                : value.contains("Phonenumber is aleardy exits") ? _showToast(context, 'Số điện thoại này đã đăng ký') :
+                                  value.contains("Username is aleardy exits")  ?   _showToast(context, 'Tên đăng nhập này đã tồn tại') : null;
+>>>>>>> bed4b75206cdd1f95d820bd1d9f66e6cd549cec2
                           });
                         } else {}
                       } else {}
@@ -218,5 +242,15 @@ class RegisterScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+  void _showToast(BuildContext context, String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(msg),
+      duration: const Duration(seconds: 5),
+      action: SnackBarAction(
+        label: 'Xin vui lòng kiểm tra lại',
+        onPressed: () {},
+      ),
+    ));
   }
 }

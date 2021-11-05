@@ -20,6 +20,7 @@ class FindJobProvider
   static const String _postUser='/User/add';
   static const String _putUser='/User/update';
   static const String _getCovidPassport='/CovidPassport/get?userID=';
+  static const String _postCovidPassport='/CovidPassport/add';
   static const String _putCovidPassport='/CovidPassport/update';
   static const String _getCovidTestPaper='/CovidTestPaper/get?userID=';
   static const String _postCovidTestPaper='/CovidTestPaper/add';
@@ -144,6 +145,27 @@ class FindJobProvider
       throw Exception(
           'Lỗi gùi ${response.statusCode}');
     }
+  }
+  static Future<String> createCovidPassport(CovidPassport covidPassport) async {
+    String result='';
+    var userBody= json.encode(covidPassport.toJson());
+    try{
+      final response = await http.post(
+        Uri.parse('$_mainUrl'+'$_postCovidPassport'),
+        headers: _header,
+        body: userBody,
+      );
+      if (response.statusCode == 200) {
+        result=response.body;
+      } else {
+        throw Exception(
+            'Lỗi gùi ${response.statusCode}');
+      }
+    }on HttpException catch(e)
+    {
+      print('Lỗi status gùi '+e.message);
+    }
+    return result;
   }
   static Future<String> updateCovidPassport(CovidPassport covidPassport) async {
     String result='';

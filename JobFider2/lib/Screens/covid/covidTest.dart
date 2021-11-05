@@ -42,7 +42,7 @@ class _covidTestState extends State<covidTest> {
           onPressed: () {
             String testType="";
             String testResult;
-            int id=sizeTestPaper;
+            // int id=sizeTestPaper;
             // Navigator.push(context,
             //     MaterialPageRoute(builder: (context) => EditProfile()));
             valueTestOption == 1 ? testType="Xét nghiệm PCR"
@@ -52,8 +52,7 @@ class _covidTestState extends State<covidTest> {
             valueTestResult == 1 ? testResult="Âm tính"
                 : valueTestResult == 2 ? testResult="Dương tính" : testResult="";
             print("date nè "+dateString);
-            id == 0 ? id = 1 : id;
-            CovidTestPaper testPaper= new CovidTestPaper(id: id,
+            CovidTestPaper testPaper= new CovidTestPaper(id: 0,
                           testType: testType,
                           testResult: testResult,
                           date: dateString,
@@ -62,7 +61,6 @@ class _covidTestState extends State<covidTest> {
             Future<String> result=FindJobProvider.createCovidTestPaper(testPaper);
             result.then((value){
               print(value);
-              print('id '+ id.toString());
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => EditProfile(username: username1)));
             });

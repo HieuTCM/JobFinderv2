@@ -141,11 +141,11 @@ class RegisterScreen extends StatelessWidget {
                           User user = new User(
                               id: 0,
                               fullname: _nameCon.text,
-                              address: 'vui lòng nhập email',
+                              address: '',
                               gender: true,
                               age: 0,
                               phonenumber: int.parse(_phoneCon.text),
-                              email: 'vui lòng nhập địa chỉ',
+                              email: '',
                               userName: _usenameCon.text,
                               password: password);
                           Future<String> result =
@@ -173,7 +173,7 @@ class RegisterScreen extends StatelessWidget {
                                             "Username is aleardy exits")
                                         ? _showToast(context,
                                             'Tên đăng nhập này đã tồn tại')
-                                        : null;
+                                        : print(value);
                           });
                         } else {}
                       } else {}

@@ -332,9 +332,21 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                 password: password);
             Future<String> result = FindJobProvider.updateUser(user, id);
             result.then((value) {
-              _showToast(context, value);
-              print(value);
-              print(_nameCon.text);
+              // _showToast(context, value);
+              // print(value);
+              // print(_nameCon.text);
+              value.contains("Update Success")
+                  ? _showToast(context, "Cập nhật thành công", "")
+                  : value.contains("Phonenumber is aleardy exits")
+                  ? _showToast(
+                  context, 'Số điện thoại này đã đăng ký', "Xin vui lòng kiểm tra lại")
+                  : value.contains(
+                  "Username is aleardy exits")
+                  ? _showToast(context,
+                  'Tên đăng nhập này đã tồn tại', "Xin vui lòng kiểm tra lại")
+                  : value.contains(
+                  "Email is aleardy exits")
+                  ? _showToast(context, 'Email này đã tồn tại', "Xin vui lòng kiểm tra lại") : null;
             });
           },
           shape:
@@ -362,13 +374,13 @@ class _EditProfileBodyState extends State<EditProfileBody> {
     );
   }
 
-  void _showToast(BuildContext context, String msg) {
+  void _showToast(BuildContext context, String msg, String label) {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
         content: Text('$msg'),
         action: SnackBarAction(
-            label: 'Got it', onPressed: scaffold.hideCurrentSnackBar),
+            label: label, onPressed: scaffold.hideCurrentSnackBar),
       ),
     );
   }
